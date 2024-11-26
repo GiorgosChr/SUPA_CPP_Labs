@@ -1,0 +1,6 @@
+Warning: Requested number of lines exceeds available data. Printing only 5 lines.
+x: 1.31934	 y: 4.10954
+x: 4.05242	 y: 4.08629
+x: 3.24894	 y: 4.86559
+x: 0.969385	 y: 2.4481
+x: 0.182998	 y: 0.646154

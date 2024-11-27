@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "FiniteFunctions.h"
 #include <filesystem> //To check extensions in a nice way
+
 
 #include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
 
@@ -62,8 +64,21 @@ Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
 double FiniteFunction::integrate(int Ndiv){ //private
+  /*
   //ToDo write an integrator
   return -99;  
+  */
+
+  // Changes for fixing the normalisation
+  double width = (m_RMax - m_RMin)/static_cast<double>(Ndiv);
+  double result = 0.0;
+  double xValue = m_RMin + 0.5*width;
+  for (int i = 0; i < Ndiv; i++) {
+    result += this->callFunction(xValue)*width;
+    xValue += width;
+  }
+
+  return result;
 }
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
@@ -234,4 +249,48 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
     gp << "plot '-' with points ps 2 lc rgb 'blue' title 'sampled data'\n";
     gp.send1d(m_samples);
   }
+}
+
+
+
+
+//Normal distribution
+
+// Setters
+void NormalDistribution::setMean(double mean) {m_mean = mean;};
+void NormalDistribution::setSigma(double sigma) {m_sigma = sigma;};
+
+double NormalDistribution::gaussian(double x) { // Private
+  return 1 / (m_sigma * sqrt(2 * M_PI)) * exp(-0.5 * pow((x - m_mean) / m_sigma, 2));
+}
+
+//Cauchy-Lorentz distribution
+
+// Setters
+void CauchyDistribution::setMean(double mean) {m_mean = mean;};
+void CauchyDistribution::setGamma(double gamma) {m_gamma = gamma;};
+
+double CauchyDistribution::lorentz(double x) { // Private
+  return 1 / (M_PI * m_gamma * (1 + pow((x - m_mean) / m_gamma, 2)));
+}
+
+//Negative Crystal Ball distribution
+
+// Setters
+void CrystalBallDistribution::setMean(double mean) {m_mean = mean;};
+void CrystalBallDistribution::setSigma(double sigma) {m_sigma = sigma;};
+void CrystalBallDistribution::setAlpha(double alpha) {m_alpha = alpha;};
+void CrystalBallDistribution::setN(double n) {m_n = n;};
+
+double CrystalBallDistribution::crystalball(double x) { // Private
+  double A = pow(m_n / fabs(m_alpha), m_n) * exp(-0.5 * pow(m_alpha, 2));
+  double B = m_n / fabs(m_alpha) - fabs(m_alpha);
+  double C = m_n / fabs(m_alpha) * 1 / (m_n - 1) * exp(-0.5 * pow(m_alpha, 2));
+  double D = sqrt(M_PI / 2) * (1 + erf(fabs(m_alpha) / sqrt(2)));
+  double N = 1 / (m_sigma * (C + D));
+
+  double t = (x - m_mean) / m_sigma; // makes the function more readable
+
+  if (t > -m_alpha) return N * exp(0.5 * pow(t, 2));
+  else return N * A * pow(B - t, -m_n);
 }

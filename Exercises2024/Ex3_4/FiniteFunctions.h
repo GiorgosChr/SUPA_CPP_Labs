@@ -47,3 +47,42 @@ protected:
 private:
   double invxsquared(double x); //The default functional form
 };
+
+
+
+// Normal distribution class derived from FiniteFunction
+class NormalDistribution : public FiniteFunction {
+public:
+  void setMean(double mean);
+  void setSigma(double sigma);
+private:
+  double m_mean;
+  double m_sigma;
+  double gaussian(double x);
+};
+
+// Cauchy-Lorentz distribution class derived from FiniteFunction
+class CauchyDistribution : public FiniteFunction {
+public:
+  void setMean(double mean);
+  void setGamma(double gamma);
+private:
+  double m_mean;
+  double m_gamma;
+  double lorentz(double x);
+};
+
+// Negative Crystal Ball distribution class derived from FiniteFunction
+class CrystalBallDistribution : public FiniteFunction {
+public:
+  void setMean(double mean);
+  void setSigma(double sigma);
+  void setAlpha(double alpha);
+  void setN(double n);
+private:
+  double m_mean;
+  double m_sigma;
+  double m_alpha;
+  double m_n;
+  double crystalball(double x);
+};

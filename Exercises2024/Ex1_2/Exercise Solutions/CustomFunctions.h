@@ -10,7 +10,7 @@ void printFromFile(const std::vector<std::vector<float>>& data, const int& nLine
 void getMagnitude(const std::vector<std::vector<float>>& data, std::vector<float>& magnitude);
 
 
-void leastSquares(const std::vector<std::vector<float>>& data, const std::vector<std::vector<float>>& error, std::string& fitFunction);
+void leastSquares(const std::vector<std::vector<float>>& data, const std::vector<std::vector<float>>& error, std::string& fitFunction, float& reducedChiSquared);
 
 
 // Define overloads for printing

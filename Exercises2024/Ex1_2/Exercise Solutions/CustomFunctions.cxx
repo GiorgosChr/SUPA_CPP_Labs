@@ -122,7 +122,7 @@ void getMagnitude(const std::vector<std::vector<float>>& data, std::vector<float
     }
 }
 
-void leastSquares(const std::vector<std::vector<float>>& data, const std::vector<std::vector<float>>& error, std::string& fitFunction) {
+void leastSquares(const std::vector<std::vector<float>>& data, const std::vector<std::vector<float>>& error, std::string& fitFunction, float& reducedChiSquared) {
     float sumX = 0;
     float sumY = 0;
     float sumXY = 0;
@@ -150,7 +150,7 @@ void leastSquares(const std::vector<std::vector<float>>& data, const std::vector
     }
     
     int degreesOfFreedom = data.size() - 2;
-    float reducedChiSquared = chiSquared / static_cast<float>(degreesOfFreedom);
+    reducedChiSquared = chiSquared / static_cast<float>(degreesOfFreedom);
 
     std::ostringstream stream;
     stream.precision(2); // Set the number of decimal points

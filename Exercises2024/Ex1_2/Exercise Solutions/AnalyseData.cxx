@@ -60,7 +60,7 @@ int main() {
 
         else if (userOption == "3") {
             std::string fileName = "output3.txt";
-            leastSquares(data, error, fitFunction);
+            leastSquares(data, error, fitFunction, reducedChiSquared);
             print(fitFunction, reducedChiSquared, fileName);
         }
 

@@ -140,7 +140,7 @@ void leastSquares(const std::vector<std::vector<float>>& data, const std::vector
     float q = (sumX2 * sumY - sumXY * sumX) / (n * sumX2 - pow(sumX, 2));
 
     // Calculation of reduced χ^2
-    float chiSquared = 0;
+    float chiSquared = 0.0;
     for (int i = 0; i < data.size(); i++) {
         float observed = data[i][1];
         float expected = p * data[i][0] + q;

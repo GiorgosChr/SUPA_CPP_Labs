@@ -263,6 +263,7 @@ void NormalDistribution::setSigma(double sigma) {m_sigma = sigma;};
 double NormalDistribution::gaussian(double x) { // Private
   return 1 / (m_sigma * sqrt(2 * M_PI)) * exp(-0.5 * pow((x - m_mean) / m_sigma, 2));
 }
+double NormalDistribution::callFunction(double x) {return this->gaussian(x);};
 
 //Cauchy-Lorentz distribution
 
@@ -273,6 +274,7 @@ void CauchyDistribution::setGamma(double gamma) {m_gamma = gamma;};
 double CauchyDistribution::lorentz(double x) { // Private
   return 1 / (M_PI * m_gamma * (1 + pow((x - m_mean) / m_gamma, 2)));
 }
+double CauchyDistribution::callFunction(double x) {return this->lorentz(x);};
 
 //Negative Crystal Ball distribution
 
@@ -294,3 +296,4 @@ double CrystalBallDistribution::crystalball(double x) { // Private
   if (t > -m_alpha) return N * exp(0.5 * pow(t, 2));
   else return N * A * pow(B - t, -m_n);
 }
+double CrystalBallDistribution::callFunction(double x) {return this->crystalball(x);};

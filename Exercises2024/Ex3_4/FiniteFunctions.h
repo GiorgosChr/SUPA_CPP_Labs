@@ -59,6 +59,7 @@ private:
   double m_mean;
   double m_sigma;
   double gaussian(double x);
+  double callFunction(double x);
 };
 
 // Cauchy-Lorentz distribution class derived from FiniteFunction
@@ -70,6 +71,7 @@ private:
   double m_mean;
   double m_gamma;
   double lorentz(double x);
+  double callFunction(double x);
 };
 
 // Negative Crystal Ball distribution class derived from FiniteFunction
@@ -85,4 +87,5 @@ private:
   double m_alpha;
   double m_n;
   double crystalball(double x);
+  double callFunction(double x);
 };

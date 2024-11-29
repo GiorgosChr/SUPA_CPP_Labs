@@ -12,20 +12,15 @@
 int main() {
 
     const std::string pathToData = "./Outputs/data/MysteryData13330.txt";
-    const std::string output = "./output.png";
-    const double range_min = -5.0;
-    const double range_max = 5.0;
+    const double rangeMin = -5.0;
+    const double rangeMax = 5.0;
     /*
     In order to plot the data we need to make use of the plotData
     member function of the class. Firstly, we need to read the data
     from the file and store them in a vector of doubles.
     To plot the function we can use the plotFunction member function.
     */
-    FiniteFunction myFunctionClass;
-    myFunctionClass.setRangeMin(range_min);
-    myFunctionClass.setRangeMax(range_max);
-    myFunctionClass.plotFunction();
-    
+
     std::ifstream dataFile(pathToData);
     std::vector<double> data;
     
@@ -33,10 +28,52 @@ int main() {
     while (dataFile >> value) {
         data.push_back(value);
     }
-    
-    
-    myFunctionClass.plotData(data, 50);
 
-    dataFile.close();
+
+    FiniteFunction myFunctionClass;
+    myFunctionClass.setRangeMin(rangeMin);
+    myFunctionClass.setRangeMax(rangeMax);
+    myFunctionClass.plotFunction();
+    myFunctionClass.plotData(data, 100, true);
+    /*
+    For some reason using 50 bins gives me the following error:
+
+    Integral not set, doing it now
+    integral: 2.7468, calculated using 10000 divisions
+    malloc(): invalid next size (unsorted)
+    Aborted (core dumped)
+
+    Perhaps it has to do with the makeHist function.
+    */
+
+    // Now doing the same with the custon functions we created
+    const std::string outputNormal = "NormalDistribution.png";
+    NormalDistribution myNormalClass;
+    myNormalClass.setMean(0.0);
+    myNormalClass.setSigma(2.0);
+    myNormalClass.setOutfile(outputNormal);
+    myNormalClass.plotFunction();
+    myNormalClass.plotData(data, 100, true);
+
+    // This one matches the data
+    const std::string outputCauchy = "CauchyDistribution.png";
+    CauchyDistribution myCauchyClass;
+    myCauchyClass.setGamma(2.0);
+    myCauchyClass.setMean(0.0);
+    myCauchyClass.setOutfile(outputCauchy);
+    myCauchyClass.plotFunction();
+    myCauchyClass.plotData(data, 100, true);
+
+
+    // I couldn't get the parameters that resemble the distribution
+    const std::string outputCB = "CrystalBallDistribution.png";
+    CrystalBallDistribution myCBClass;
+    myCBClass.setAlpha(0.5);
+    myCBClass.setN(1.5);
+    myCBClass.setMean(0.5);
+    myCBClass.setSigma(2.);
+    myCBClass.setOutfile(outputCB);
+    myCBClass.plotFunction();
+    myCBClass.plotData(data, 100, true);
     return 0;
 }

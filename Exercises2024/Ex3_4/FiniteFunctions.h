@@ -7,6 +7,7 @@
 class FiniteFunction{
 
 public:
+  std::vector<double> m_randomSamples;
   FiniteFunction(); //Empty constructor
   FiniteFunction(double range_min, double range_max, std::string outfile); //Variable constructor
   ~FiniteFunction(); //Destructor
@@ -23,6 +24,8 @@ public:
   void plotData(std::vector<double> &points, int NBins, bool isdata=true); //NB! use isdata flag to pick between data and sampled distributions
   virtual void printInfo(); //Dump parameter info about the current function (Overridable)
   virtual double callFunction(double x); //Call the function with value x (Overridable)
+  std::vector<double> getSamples(); //Return the sampled data points
+  void sampleFunction(int Nsamples); //Sample the function Nsamples times
 
   //Protected members can be accessed by child classes but not users
 protected:
@@ -43,6 +46,10 @@ protected:
   std::vector< std::pair<double, double> > makeHist(std::vector<double> &points, int Nbins); //Helper function to turn data points into histogram with Nbins
   void checkPath(std::string outstring); //Helper function to ensure data and png paths are correct
   void generatePlot(Gnuplot &gp); 
+  double randomX;
+  double randomY;
+  double randomSigma = 10.0;
+  double metropolis(); // Metropolis algorithm for sampling from a finite function
   
 private:
   double invxsquared(double x); //The default functional form

@@ -4,6 +4,7 @@
 #include <cmath>
 #include "FiniteFunctions.h"
 #include <filesystem> //To check extensions in a nice way
+#include <random> //For random number generation
 
 
 #include "gnuplot-iostream.h" //Needed to produce plots (not part of the course) 
@@ -251,6 +252,42 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
   }
 }
 
+//Metropolis algorithm for sampling from a finite function
+// By defining the function here we can use it for any derived class
+double FiniteFunction::metropolis(){
+  // Generate a random number between m_RMin and m_RMax
+  std::mt19937 mtEngine{1234567890};
+  std::uniform_real_distribution<double> uniformPDF{m_RMin, m_RMax};
+  randomX = uniformPDF(mtEngine);
+  
+  while(true){
+    
+    std::normal_distribution<double> normalPDF{randomX, randomSigma};
+    randomY = normalPDF(mtEngine);
+
+    auto A = std::min(1.0, this->callFunction(randomY)/this->callFunction(randomX));
+
+    std::uniform_real_distribution<double> uniform{0, 1};
+    auto T = uniform(mtEngine);
+
+    if (T < A){
+      randomX = randomY;
+      return randomY;
+    }
+  }
+}
+
+
+//Sample the function Nsamples times
+void FiniteFunction::sampleFunction(int Nsamples){
+  for (int i = 0; i < Nsamples; i++){
+    m_randomSamples.push_back(this->metropolis());
+  }
+}
+
+std::vector<double> FiniteFunction::getSamples(){
+  return m_randomSamples;
+}
 
 
 

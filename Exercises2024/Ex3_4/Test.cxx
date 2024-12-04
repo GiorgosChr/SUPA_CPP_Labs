@@ -75,5 +75,17 @@ int main() {
     myCBClass.setOutfile(outputCB);
     myCBClass.plotFunction();
     myCBClass.plotData(data, 100, true);
+
+    const std::string outputFinal = "FinalDistribution.png";
+    CauchyDistribution myFinalClass;
+    myFinalClass.setGamma(2.0);
+    myFinalClass.setMean(0.0);
+    myFinalClass.setOutfile(outputFinal);
+    myFinalClass.plotFunction();
+    myFinalClass.plotData(data, 100, true);
+    myFinalClass.sampleFunction(1000);
+    auto samples = myFinalClass.getSamples();
+    myFinalClass.plotData(samples, 100, false);
+
     return 0;
 }

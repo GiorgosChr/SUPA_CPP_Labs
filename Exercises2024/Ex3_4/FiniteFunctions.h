@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <random>
 #include "gnuplot-iostream.h"
 
 #pragma once //Replacement for IFNDEF
@@ -48,7 +49,8 @@ protected:
   void generatePlot(Gnuplot &gp); 
   double randomX;
   double randomY;
-  double randomSigma = 10.0;
+  double randomSigma = 5.0;
+  std::mt19937 mtEngine{1234};
   double metropolis(); // Metropolis algorithm for sampling from a finite function
   
 private:

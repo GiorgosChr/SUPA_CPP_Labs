@@ -256,7 +256,6 @@ void FiniteFunction::generatePlot(Gnuplot &gp){
 // By defining the function here we can use it for any derived class
 double FiniteFunction::metropolis(){
   // Generate a random number between m_RMin and m_RMax
-  std::mt19937 mtEngine{1234567890};
   std::uniform_real_distribution<double> uniformPDF{m_RMin, m_RMax};
   randomX = uniformPDF(mtEngine);
   

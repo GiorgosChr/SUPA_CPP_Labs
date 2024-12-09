@@ -83,9 +83,16 @@ int main() {
     myFinalClass.setOutfile(outputFinal);
     myFinalClass.plotFunction();
     myFinalClass.plotData(data, 100, true);
-    myFinalClass.sampleFunction(1000);
+    myFinalClass.sampleFunction(1000000);
     auto samples = myFinalClass.getSamples();
     myFinalClass.plotData(samples, 100, false);
+
+    /*
+    I find the metropolis algorithm not working very well.
+    I tried various values of the nodmal distribution width,
+    and the results were varying from a uniform-like distribution,
+    to something resembling a sum of 3 gaussians.
+    */
 
     return 0;
 }
